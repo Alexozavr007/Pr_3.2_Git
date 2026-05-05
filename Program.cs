@@ -2,7 +2,7 @@
 Console.InputEncoding = System.Text.Encoding.UTF8;
 bool e = true;
 Console.WriteLine("Введіть масив для обробки");
-//var arr = ReadJaggedRandom();
+var arr = ReadJaggedRandom();
 while (e) {
     Console.WriteLine("Введіть блок для виконання завдання ( 1, 2, 3 або 4 )");
     var num = Console.ReadLine();
@@ -11,7 +11,7 @@ while (e) {
             //Block_2_Max(ref arr);
             break;
         case "2":
-            //Block_2_Alex(ref arr);
+            Block_2_Alex(ref arr);
             break;
         case "3":
             //Block_2_Illia(ref arr);
@@ -25,4 +25,61 @@ while (e) {
     }
     Console.WriteLine("Чи продовжувати далі змінювати масив? (true or false)");
     e = bool.Parse(Console.ReadLine());
+}
+static int[][] ReadJaggedRandom() {
+    Random rnd = new Random();
+    Console.Write("Введіть кількість рядків: ");
+    int rows = int.Parse(Console.ReadLine());
+    int[][] jagged = new int[rows][];
+
+    for (int i = 0; i < rows; i++) {
+        int cols = rnd.Next(1, 11);
+        jagged[i] = new int[cols];
+
+        for (int j = 0; j < cols; j++) {
+            jagged[i][j] = rnd.Next(0, 51);
+        }
+    }
+    return jagged;
+}
+static void PrintJaggedArray(int[][] arr) {
+    for (int i = 0; i < arr.Length; i++) {
+        Console.Write($"Рядок {i + 1}: ");
+        Console.WriteLine(string.Join(", ", arr[i]));
+    }
+}
+
+static void Block_2_Alex(ref int[][] arr) {
+    if (arr == null || arr.Length == 0) {
+        Console.WriteLine("Масив порожній.");
+        return;
+    }
+
+    Console.WriteLine("Початковий зубчастий масив:");
+    PrintJaggedArray(arr);
+
+    RemoveEvenRows(ref arr);
+
+    Console.WriteLine("Масив після видалення парних рядків (0, 2, 4...):");
+    PrintJaggedArray(arr);
+}
+
+//Alex methods
+static void RemoveEvenRows(ref int[][] arr) {
+    int n = arr.Length;
+
+    int newCount = n / 2;
+
+    if (newCount == 0) {
+        Console.WriteLine("[Результат]: Усі рядки видалено.");
+        return;
+    }
+
+    for (int i = 0; i < newCount; i++) {
+        arr[i] = arr[i * 2 + 1];
+    }
+
+    Array.Resize(ref arr, newCount);
+    var a = arr.Length;
+    Console.WriteLine($"[Успіх]: Видалено парні рядки. Нова кількість рядків: {newCount}");
 }
