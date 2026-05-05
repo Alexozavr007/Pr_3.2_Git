@@ -14,7 +14,7 @@ while (e) {
             Block_2_Alex(ref arr);
             break;
         case "3":
-            //Block_2_Illia(ref arr);
+            Block_2_Illia(ref arr);
             break;
         case "4":
             //Block_2_Sania(ref arr);
@@ -67,6 +67,21 @@ static void Block_2_Max(ref int[][] arr)
 {
     PrintJaggedArray(arr);
     z8(ref arr);
+    PrintJaggedArray(arr);
+}
+static void Block_2_Illia(ref int[][] arr)
+{
+    if (arr == null || arr.Length == 0)
+    {
+        Console.WriteLine("Масив порожній.");
+        return;
+    }
+    Console.WriteLine("Початковий масив:");
+    PrintJaggedArray(arr);
+
+    DeleteEvenRows(ref arr);
+
+    Console.WriteLine("Змінений масив(знищено парні рядки):");
     PrintJaggedArray(arr);
 }
 
@@ -129,4 +144,19 @@ static void DeleteRow(ref int[][] jagged, int k)
     }
 
     jagged = newJagged;
+}
+//Illia method
+static void DeleteEvenRows(ref int[][] initialData)
+{
+    int newSize = (initialData.Length + 1) / 2;
+    int[][] newArr = new int[newSize][];
+    int index = 0;
+
+    for (int i = 0; i < initialData.Length; i += 2)
+    {
+        newArr[index] = initialData[i];
+        index++;
+    }
+
+    initialData = newArr;
 }
