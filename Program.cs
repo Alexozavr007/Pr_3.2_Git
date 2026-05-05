@@ -8,7 +8,7 @@ while (e) {
     var num = Console.ReadLine();
     switch (num) {
         case "1":
-            //Block_2_Max(ref arr);
+            Block_2_Max(ref arr);
             break;
         case "2":
             Block_2_Alex(ref arr);
@@ -63,6 +63,13 @@ static void Block_2_Alex(ref int[][] arr) {
     Console.WriteLine("Масив після видалення парних рядків (0, 2, 4...):");
     PrintJaggedArray(arr);
 }
+static void Block_2_Max(ref int[][] arr)
+{
+    PrintJaggedArray(arr);
+    z8(ref arr);
+    PrintJaggedArray(arr);
+}
+
 
 //Alex methods
 static void RemoveEvenRows(ref int[][] arr) {
@@ -82,4 +89,44 @@ static void RemoveEvenRows(ref int[][] arr) {
     Array.Resize(ref arr, newCount);
     var a = arr.Length;
     Console.WriteLine($"[Успіх]: Видалено парні рядки. Нова кількість рядків: {newCount}");
+}
+static void z8(ref int[][] arr)
+{
+    int maxcol = 0;
+    int maxrow = 0;
+    for (int i = 0; i < arr.Length; i++)
+    {
+        for (int j = 0; j < arr[i].Length; j++)
+        {
+            if (arr[i][j] > arr[maxrow][maxcol])
+            {
+                maxrow = i;
+                maxcol = j;
+            }
+        }
+    }
+    DeleteRow(ref arr, maxrow);
+}
+//Max methods
+static void DeleteRow(ref int[][] jagged, int k)
+{
+    if (jagged == null || k < 0 || k >= jagged.Length)
+    {
+        Console.WriteLine("Помилка: такого рядка не існує. Масив не змінено.");
+        return;
+    }
+
+    int[][] newJagged = new int[jagged.Length - 1][];
+
+    for (int i = 0; i < k; i++)
+    {
+        newJagged[i] = jagged[i];
+    }
+
+    for (int i = k + 1; i < jagged.Length; i++)
+    {
+        newJagged[i - 1] = jagged[i];
+    }
+
+    jagged = newJagged;
 }
